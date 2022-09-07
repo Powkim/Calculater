@@ -51,14 +51,10 @@ if(buttonclass==='clear')
 
 }
 if (buttonclass === 'calculate') {
-    if (firstNum) {
-      if (previousKey === 'calculate') {
-        display.textContent = calculate(display.textContent, operate, previousNum);
-      } else {
-        previousNum = display.textContent;
-        display.textContent = calculate(firstNum, operate, display.textContent);
-      }
-    }
+       
+        display.textContent = calculate(firstNum, operate, previousNum);
+   
+   
     previousKey = 'calculate';
   }
 console.log(firstNum,previousNum)
