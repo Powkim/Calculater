@@ -2,62 +2,74 @@ const number=document.querySelector('.number')
 const operator=document.querySelector('.operator')
 const display=document.querySelector('#display')
 const buttons =document.querySelector('#button_wrap')
-let firstNum, operate, previousKey, previousNum;
+let firstNum, operate, previousKey, previousNum=''
 function calculate(n1, operator, n2) {
     let result = 0;
     if (operator === '+') {
       result = Number(n1) + Number(n2);
     }
     if (operator === '-') {
-      result = Number(n1) - Number(n2);
+      result= Number(n1) - Number(n2);
     }
     if (operator === '*') {
       result = Number(n1) * Number(n2);
     }
     if (operator === '/') {
-      result = Number(n1) / Number(n2);
+      result= Number(n1) / Number(n2);
     }
     // TODO : n1과 n2를 operator에 따라 계산하는 함수를 만드세요.
     // ex) 입력값이 n1 : '1', operator : '+', n2 : '2' 인 경우, 3이 리턴됩니다.
-    return String(result);
+    return String( result);
   }
   
 buttons.addEventListener('click',(event)=>{
    const target=event.target;
    const buttonclass=target.classList[0];
    const buttonContent = target.textContent
+
   if(buttonclass==='number'){
-    if (display.textContent === '0' || previousKey === 'operator' || previousKey === 'calculate') {
-        display.textContent = buttonContent;
-      } else {
-        display.textContent = display.textContent + buttonContent;
+    if (!operate) {
+      display.value+=buttonContent;
+        firstNum=display.value
+      } 
+      else if (operate&&firstNum)
+         {   previousNum=buttonContent
+        
+        display.value+=previousNum;
+     
       }
+     
       previousKey = 'number';
+     console.log('')
 }
 if(buttonclass==='operator'){
-    if (firstNum && operatorForAdvanced && previousKey !== 'operator' && previousKey !== 'calculate') {
-        display.textContent = calculate(firstNum, operatorForAdvanced, display.textContent);
+    if ( previousKey !== 'operator' && previousKey !== 'calculate') {
+      
+        previousNum=''
       }
-      firstNum = display.textContent;
-      operatorForAdvanced = buttonContent;
+     
+      operate = buttonContent;
+    display.value +=operate;
       previousKey = 'operator';}
-if(buttonclass==='clear')
 
-{    firstNum = undefined;
-    operate = undefined;
-    previousNum = undefined;
+if(buttonclass==='clear'){
+  firstNum = '';
+    operate = '';
+    previousNum = '';
     previousKey = 'clear';
-    display.textContent = '0';
+  display.value = '';
 
 }
 if (buttonclass === 'calculate') {
        
-        display.textContent = calculate(firstNum, operate, previousNum);
-   
-   
-    previousKey = 'calculate';
+      display.value = calculate(firstNum, operate, previousNum);
+   firstNum=display.value
+   operate=''
+   previousNum=''
+       previousKey = 'calculate';
+
   }
-console.log(firstNum,previousNum)
+console.log(firstNum,operate,previousNum,display.value)
 })
 
 
@@ -74,10 +86,10 @@ console.log(firstNum,previousNum)
 //   }
 
 //   if (action === 'number') {
-//     if (display.textContent === '0' || previousKey === 'operator' || previousKey === 'calculate') {
-//       display.textContent = buttonContent;
+//     if display.value === '0' || previousKey === 'operator' || previousKey === 'calculate') {
+//      display.value = buttonContent;
 //     } else {
-//       display.textContent = display.textContent + buttonContent;
+//      display.value =display.value + buttonContent;
 //     }
 //     previousKey = 'number';
 //   }
@@ -85,18 +97,18 @@ console.log(firstNum,previousNum)
 //   if (action === 'operator') {
 //     target.classList.add('isPressed');
 //     if (firstNum && operatorForAdvanced && previousKey !== 'operator' && previousKey !== 'calculate') {
-//       display.textContent = calculate(firstNum, operatorForAdvanced, display.textContent);
+//      display.value = calculate(firstNum, operatorForAdvanced,display.value);
 //     }
-//     firstNum = display.textContent;
+//     firstNum =display.value;
 //     operatorForAdvanced = buttonContent;
 //     previousKey = 'operator';
 //   }
 
 //   if (action === 'decimal') {
-//     if (!display.textContent.includes('.') && previousKey !== 'operator') {
-//       display.textContent = display.textContent + '.';
+//     if (display.value.includes('.') && previousKey !== 'operator') {
+//      display.value =display.value + '.';
 //     } else if (previousKey === 'operator') {
-//       display.textContent = '0.';
+//      display.value = '0.';
 //     }
 //     previousKey = 'decimal';
 //   }
@@ -106,16 +118,16 @@ console.log(firstNum,previousNum)
 //     operatorForAdvanced = undefined;
 //     previousNum = undefined;
 //     previousKey = 'clear';
-//     display.textContent = '0';
+//    display.value = '0';
 //   }
 
 //   if (action === 'calculate') {
 //     if (firstNum) {
 //       if (previousKey === 'calculate') {
-//         display.textContent = calculate(display.textContent, operatorForAdvanced, previousNum);
+//        display.value = calculatedisplay.value, operatorForAdvanced, previousNum);
 //       } else {
-//         previousNum = display.textContent;
-//         display.textContent = calculate(firstNum, operatorForAdvanced, display.textContent);
+//         previousNum =display.value;
+//        display.value = calculate(firstNum, operatorForAdvanced,display.value);
 //       }
 //     }
 //     previousKey = 'calculate';
